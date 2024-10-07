@@ -1,0 +1,24 @@
+services:
+  ealen-echo:
+    image: chocolatefrappe/nginx:stable-alpine
+    environment:
+      - CLOUDFLARE_ENABLED=true
+    networks:
+      ealen:
+    ports:
+      - mode: host
+        target: 80
+        published: 80
+      - mode: host
+        target: 443
+        published: 443
+    volumes:
+      - ./default.conf.template:/etc/nginx/templates/default.conf.template
+
+  ealen-echo-server:
+    image: ealen/echo-server
+    networks:
+      ealen:
+
+networks:
+  ealen:
